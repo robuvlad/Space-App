@@ -8,6 +8,8 @@ public class RandomPatrol : MonoBehaviour
     public float minX, maxX, minY, maxY;
     public float difficultyTime;
     public float minSpeed, maxSpeed;
+    public GameObject gameOverPanel = null;
+
     private float speed;
     private Vector2 targetPosition;
 
@@ -44,7 +46,7 @@ public class RandomPatrol : MonoBehaviour
     {
         if (collider.tag == "Planet")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            gameOverPanel.SetActive(true);
         }
     }
 

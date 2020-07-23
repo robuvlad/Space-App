@@ -5,7 +5,7 @@ using UnityEngine;
 public class DragAndDrop : MonoBehaviour
 {
     private bool moveAllowed;
-    private Collider2D collider;
+    private Collider2D collider = null;
 
     void Start()
     {
