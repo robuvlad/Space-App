@@ -47,6 +47,7 @@ public class RandomPatrol : MonoBehaviour
         if (collider.tag == "Planet")
         {
             gameOverPanel.SetActive(true);
+            Time.timeScale = 0.0f;
         }
     }
 
