@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RandomPatrol : MonoBehaviour
 {
     public float minX, maxX, minY, maxY;
-    public float speed;
+    public float difficultyTime;
+    public float minSpeed, maxSpeed;
+    private float speed;
     private Vector2 targetPosition;
 
     void Start()
@@ -15,10 +18,17 @@ public class RandomPatrol : MonoBehaviour
 
     void Update()
     {
+        MovePlanet();
+    }
+
+    private void MovePlanet()
+    {
         if ((Vector2)transform.position != targetPosition)
         {
+            speed = Mathf.Lerp(minSpeed, maxSpeed, GetDifficultyPercent());
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-        } else
+        }
+        else
         {
             targetPosition = GetRandomTarget();
         }
@@ -28,5 +38,18 @@ public class RandomPatrol : MonoBehaviour
         float xPosition = Random.Range(minX, maxX);
         float yPosition = Random.Range(minY, maxY);
         return new Vector2(xPosition, yPosition);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.tag == "Planet")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    private float GetDifficultyPercent()
+    {
+        return Mathf.Clamp01(Time.timeSinceLevelLoad / difficultyTime);
     }
 }
